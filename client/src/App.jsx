@@ -1,9 +1,13 @@
-import Dashboard2 from "./pages/dashboard2"
+import Dashboard from "./pages/dashboard";
+import LandingPage from "./pages/landingPage";
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
-
   return (
-    <Dashboard2 />
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />  
+    </Routes>
   )
 }
 

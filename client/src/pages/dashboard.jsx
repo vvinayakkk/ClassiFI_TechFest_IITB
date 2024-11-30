@@ -47,38 +47,7 @@ const Dashboard = () => {
     },
   ]);
 
-  const [analytics] = useState({
-    jobCategories: {
-      "Software Development": 45,
-      "Project Management": 23,
-      "HR": 15,
-      "Data Science": 12,
-      "Design": 5
-    },
-    weeklyUploads: [156, 142, 176, 189, 201, 188, 234],
-    accuracy: {
-      weekly: 98.5,
-      improvement: 2.3
-    }
-  });
-
-  const [settings] = useState({
-    classifications: [
-      { name: "Software Development", enabled: true },
-      { name: "Project Management", enabled: true },
-      { name: "HR", enabled: true },
-      { name: "Data Science", enabled: true },
-      { name: "Design", enabled: false }
-    ],
-    notifications: {
-      email: true,
-      push: true,
-      weekly_report: true
-    }
-  });
-
   const handleUploadClick = () => {
-    // Simulate file upload dialog
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.pdf,.doc,.docx';
@@ -94,13 +63,236 @@ const Dashboard = () => {
     setSelectedUpload(selectedUpload?.id === upload.id ? null : upload);
   };
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'classifications':
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Classifications</CardTitle>
+              <CardDescription>View and manage resume classifications</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Available Classifications</h3>
+                <div className="grid gap-4">
+                  {["Software Development", "Project Management", "HR", "Data Science", "Design"].map((category) => (
+                    <div key={category} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <span>{category}</span>
+                      <span className="text-blue-600 cursor-pointer hover:underline">View Details</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      
+      case 'analytics':
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Analytics Dashboard</CardTitle>
+              <CardDescription>Detailed metrics and insights</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <h3 className="font-medium mb-2">Classification Accuracy</h3>
+                    <div className="text-3xl font-bold text-blue-600">98.5%</div>
+                    <p className="text-sm text-gray-500">Last 7 days</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <h3 className="font-medium mb-2">Total Processed</h3>
+                    <div className="text-3xl font-bold text-blue-600">1,234</div>
+                    <p className="text-sm text-gray-500">This month</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      
+      case 'settings':
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>System Settings</CardTitle>
+              <CardDescription>Configure your preferences</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="font-medium">Notification Preferences</h3>
+                  <div className="space-y-2">
+                    {['Email Notifications', 'Push Notifications', 'Weekly Reports'].map((setting) => (
+                      <div key={setting} className="flex items-center justify-between p-2">
+                        <span>{setting}</span>
+                        <button className="w-12 h-6 bg-blue-600 rounded-full relative">
+                          <span className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      
+      default:
+        return (
+          <>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Uploads</CardTitle>
+                  <Upload className="h-4 w-4 text-gray-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">1,234</div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-green-500">↑ 12%</span>
+                    <span className="text-xs text-gray-500">from last month</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+                  <Users className="h-4 w-4 text-gray-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">892</div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-green-500">↑ 8%</span>
+                    <span className="text-xs text-gray-500">from last week</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Job Categories</CardTitle>
+                  <Briefcase className="h-4 w-4 text-gray-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">15</div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-blue-500">+2</span>
+                    <span className="text-xs text-gray-500">new categories</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Accuracy Rate</CardTitle>
+                  <PieChart className="h-4 w-4 text-gray-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">98.5%</div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-green-500">↑ 2.3%</span>
+                    <span className="text-xs text-gray-500">improvement</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Recent Uploads and Notifications */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Recent Uploads */}
+              <div className="lg:col-span-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Recent Uploads</CardTitle>
+                    <CardDescription>Latest resumes processed by the system</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {recentUploads.map(upload => (
+                        <div 
+                          key={upload.id} 
+                          className={`
+                            flex items-center justify-between p-4 rounded-lg cursor-pointer
+                            transition-all duration-200
+                            ${selectedUpload?.id === upload.id ? 'bg-blue-50 ring-2 ring-blue-500' : 'bg-gray-50 hover:bg-gray-100'}
+                          `}
+                          onClick={() => handleUploadSelect(upload)}
+                        >
+                          <div className="flex items-center space-x-4">
+                            <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                              <FileText className="h-5 w-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <p className="font-medium">{upload.name}</p>
+                              <p className="text-sm text-gray-500">{upload.status}</p>
+                              {selectedUpload?.id === upload.id && (
+                                <div className="mt-2 space-y-1">
+                                  <p className="text-sm"><span className="font-medium">Confidence:</span> {upload.confidence}%</p>
+                                  <p className="text-sm"><span className="font-medium">Key Skills:</span> {upload.skills.join(", ")}</p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm text-gray-500">{upload.time}</span>
+                            <ChevronRight className={`h-5 w-5 text-gray-400 transition-transform ${selectedUpload?.id === upload.id ? 'rotate-90' : ''}`} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Notifications */}
+              <div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>System Updates</CardTitle>
+                    <CardDescription>Latest notifications and alerts</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {notifications.map(notification => (
+                        <div 
+                          key={notification.id} 
+                          className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-all duration-200"
+                        >
+                          <div className={`h-2 w-2 rounded-full ${
+                            notification.type === 'success' ? 'bg-green-500' :
+                            notification.type === 'warning' ? 'bg-yellow-500' :
+                            'bg-blue-500'
+                          }`}></div>
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">{notification.message}</p>
+                            <p className="text-xs text-gray-500">{notification.time}</p>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-gray-400" />
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Top Navigation Bar */}
       <nav className="bg-white shadow-lg px-6 py-4 sticky top-0 z-50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+            <h1 
+              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text cursor-pointer"
+              onClick={() => setActiveTab('dashboard')}
+            >
               ResumeAI
             </h1>
             <div className="relative">
@@ -138,7 +330,10 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
-            <button className="p-2 rounded-full hover:bg-gray-100">
+            <button 
+              className="p-2 rounded-full hover:bg-gray-100"
+              onClick={() => setActiveTab('settings')}
+            >
               <Settings className="h-5 w-5 text-gray-600" />
             </button>
             <button className="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1 hover:bg-gray-200">
@@ -196,225 +391,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Uploads</CardTitle>
-              <Upload className="h-4 w-4 text-gray-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,234</div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xs text-green-500">↑ 12%</span>
-                <span className="text-xs text-gray-500">from last month</span>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Users</CardTitle>
-              <Users className="h-4 w-4 text-gray-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">892</div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xs text-green-500">↑ 8%</span>
-                <span className="text-xs text-gray-500">from last week</span>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Job Categories</CardTitle>
-              <Briefcase className="h-4 w-4 text-gray-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">15</div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xs text-blue-500">+2</span>
-                <span className="text-xs text-gray-500">new categories</span>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Accuracy Rate</CardTitle>
-              <PieChart className="h-4 w-4 text-gray-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{analytics.accuracy.weekly}%</div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xs text-green-500">↑ {analytics.accuracy.improvement}%</span>
-                <span className="text-xs text-gray-500">improvement</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Dynamic Content Based on Active Tab */}
+        {renderContent()}
+      </div>
+    </div>
+  );
+};
 
-        {/* Recent Uploads and Notifications */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Uploads */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Uploads</CardTitle>
-                <CardDescription>Latest resumes processed by the system</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentUploads.map(upload => (
-                    <div 
-                      key={upload.id} 
-                      className={`
-                        flex items-center justify-between p-4 rounded-lg cursor-pointer
-                        transition-all duration-200
-                        ${selectedUpload?.id === upload.id ? 'bg-blue-50 ring-2 ring-blue-500' : 'bg-gray-50 hover:bg-gray-100'}
-                      `}
-                      onClick={() => handleUploadSelect(upload)}
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                          <FileText className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">{upload.name}</p>
-                          <p className="text-sm text-gray-500">{upload.status}</p>
-                          {selectedUpload?.id === upload.id && (
-                            <div className="mt-2 space-y-1">
-                              <p className="text-sm"><span className="font-medium">Confidence:</span> {upload.confidence}%</p>
-                              <p className="text-sm"><span className="font-medium">Key Skills:</span> {upload.skills.join(", ")}</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500">{upload.time}</span>
-                        <ChevronRight className={`h-5 w-5 text-gray-400 transition-transform ${selectedUpload?.id === upload.id ? 'rotate-90' : ''}`} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Notifications */}
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>System Updates</CardTitle>
-                <CardDescription>Latest notifications and alerts</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                      {notifications.map(notification => (
-                        <div 
-                          key={notification.id} 
-                          className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-all duration-200"
-                        >
-                          <div className={`h-2 w-2 rounded-full ${
-                            notification.type === 'success' ? 'bg-green-500' :
-                            notification.type === 'warning' ? 'bg-yellow-500' :
-                            'bg-blue-500'
-                          }`}></div>
-                          <div className="flex-1">
-                            <p className="text-sm font-medium">{notification.message}</p>
-                            <p className="text-xs text-gray-500">{notification.time}</p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-gray-400" />
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-    
-                {/* Quick Settings */}
-                <Card className="mt-6">
-                  <CardHeader>
-                    <CardTitle>Quick Settings</CardTitle>
-                    <CardDescription>Frequently used configurations</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {settings.classifications.slice(0, 3).map((classification, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <span className="text-sm font-medium">{classification.name}</span>
-                          <button
-                            className={`
-                              relative inline-flex h-6 w-11 items-center rounded-full
-                              transition-colors focus:outline-none
-                              ${classification.enabled ? 'bg-blue-600' : 'bg-gray-200'}
-                            `}
-                          >
-                            <span
-                              className={`
-                                inline-block h-4 w-4 transform rounded-full bg-white transition-transform
-                                ${classification.enabled ? 'translate-x-6' : 'translate-x-1'}
-                              `}
-                            />
-                          </button>
-                        </div>
-                      ))}
-                      <button className="text-sm text-blue-600 hover:text-blue-700 font-medium mt-2">
-                        View All Settings →
-                      </button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-    
-            {/* Analytics Preview */}
-            <div className="mt-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Analytics Overview</CardTitle>
-                  <CardDescription>Resume classification trends and insights</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Job Categories Distribution */}
-                    <div className="space-y-4">
-                      <h3 className="font-medium">Job Categories Distribution</h3>
-                      {Object.entries(analytics.jobCategories).map(([category, percentage]) => (
-                        <div key={category} className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span>{category}</span>
-                            <span className="font-medium">{percentage}%</span>
-                          </div>
-                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-blue-600 rounded-full"
-                              style={{ width: `${percentage}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-    
-                    {/* Weekly Upload Trend */}
-                    <div>
-                      <h3 className="font-medium mb-4">Weekly Upload Trend</h3>
-                      <div className="h-64 flex items-end space-x-2">
-                        {analytics.weeklyUploads.map((count, index) => (
-                          <div key={index} className="flex-1 flex flex-col items-center">
-                            <div 
-                              className="w-full bg-blue-500 hover:bg-blue-600 transition-colors rounded-t"
-                              style={{ height: `${(count / Math.max(...analytics.weeklyUploads)) * 100}%` }}
-                            />
-                            <span className="text-xs text-gray-500 mt-2">Week {index + 1}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      );
-    };
-    
-    export default Dashboard;
+export default Dashboard;
