@@ -13,10 +13,37 @@ import {
 } from "@/components/ui/drawer";
 import { Info , Upload, User, FileText, PieChart, Settings, Bell, Search, ChevronRight, BarChart, Users, Briefcase } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import ResumeProcessingLoader from '@/components/ResumeProcessingLoader ';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const [processingResults, setProcessingResults] = useState({
+    model1: {
+      confidence: 92.3,
+      classification: "Software Engineer",
+      skills: ["JavaScript", "React", "Node.js"]
+    },
+    model2: {
+      confidence: 94.1,
+      classification: "Full Stack Developer",
+      skills: ["Python", "Docker", "AWS"]
+    },
+    model3: {
+      confidence: 93.7,
+      classification: "DevOps Engineer",
+      skills: ["Kubernetes", "CI/CD", "Cloud Computing"]
+    },
+    model4: {
+      confidence: 95.5,
+      classification: "Cloud Architect",
+      skills: ["Cloud Strategy", "Enterprise Architecture", "Security"]
+    },
+    overallConfidence: 94.4,
+    finalClassification: "Cloud Solutions Architect"
+  });
 
   const classificationData = [
     { category: "BUSINESS-DEVELOPMENT", count: 120, icon: "💼" },
@@ -521,13 +548,38 @@ const Dashboard = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.pdf,.doc,.docx';
-    input.onchange = (e) => {
+    input.onchange = async (e) => {
       if (e.target.files?.[0]) {
-        alert('Resume upload initiated! (This is a demo)');
+        // Set processing state to true
+        setIsProcessing(true);
+
+        try {
+          // Simulate processing time
+          await new Promise(resolve => setTimeout(resolve, 5000));
+
+          // Update recent uploads with processed result
+          setRecentUploads(prev => [
+            {
+              id: Date.now(),
+              name: e.target.files[0].name,
+              status: `Classified as: ${processingResults.finalClassification}`,
+              time: "Just now",
+              confidence: processingResults.overallConfidence,
+              skills: processingResults.model4.skills
+            },
+            ...prev
+          ]);
+        } catch (error) {
+          console.error("Processing error", error);
+        } finally {
+          // End loading state
+          setIsProcessing(false);
+        }
       }
     };
     input.click();
   };
+  
 
   const handleUploadSelect = (upload) => {
     setSelectedUpload(selectedUpload?.id === upload.id ? null : upload);
@@ -734,6 +786,10 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <ResumeProcessingLoader 
+        isLoading={isProcessing} 
+        modelResults={processingResults} 
+      />
       {/* Top Navigation Bar */}
       <nav className="bg-white shadow-lg px-6 py-4 sticky top-0 z-50">
         <div className="flex items-center justify-between">
