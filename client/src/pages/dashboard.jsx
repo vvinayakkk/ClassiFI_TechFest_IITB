@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [recentUploads, setRecentUploads] = useState(RECENT_UPLOADS);
   const [selectedUpload, setSelectedUpload] = useState(null);
   const [error, setError] = useState(null);
+  const [uploadedFiles, setUploadedFiles] = useState(new Map());
 
   const processResumeWithModel = async (file, modelNumber) => {
     const formData = new FormData();
@@ -37,7 +38,8 @@ const Dashboard = () => {
       if (data.status === 'failed') {
         throw new Error(`Model ${modelNumber} processing failed`);
       }
-
+      console.log(`Model ${modelNumber} processed successfully`);
+      console.log(data);
       return data;
     } catch (error) {
       setError(`Model ${modelNumber}: ${error.message}`);
@@ -113,6 +115,12 @@ const Dashboard = () => {
           confidence: results.overallConfidence,
           skills: ["JavaScript", "React", "Node.js"] // You might want to get this from the API
         };
+        
+        // Store the file in the Map
+        const updatedMap = new Map(uploadedFiles).set(newUpload.id, file);
+        setUploadedFiles(updatedMap);
+        window.uploadedFiles = updatedMap;
+        
         setRecentUploads(prev => [newUpload, ...prev]);
         setProcessingResults(results);
       } catch (error) {
@@ -204,6 +212,7 @@ const Dashboard = () => {
                   uploads={recentUploads}
                   selectedUpload={selectedUpload}
                   onUploadSelect={handleUploadSelect}
+                  uploadedFiles={uploadedFiles}
                 />
               </div>
               <div>

@@ -1,7 +1,17 @@
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { FileText, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const RecentUploads = ({ uploads, selectedUpload, onUploadSelect }) => {
+const RecentUploads = ({ uploads, selectedUpload, onUploadSelect, uploadedFiles }) => {
+  const navigate = useNavigate();
+
+  const handleUploadClick = (upload) => {
+    onUploadSelect(upload);
+    if (uploadedFiles.has(upload.id)) {
+      navigate(`/moreanalysis/${upload.id}`);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -18,7 +28,7 @@ const RecentUploads = ({ uploads, selectedUpload, onUploadSelect }) => {
                 transition-all duration-200
                 ${selectedUpload?.id === upload.id ? 'bg-blue-50 ring-2 ring-blue-500' : 'bg-gray-50 hover:bg-gray-100'}
               `}
-              onClick={() => onUploadSelect(upload)}
+              onClick={() => handleUploadClick(upload)}
             >
               <div className="flex items-center space-x-4">
                 <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
