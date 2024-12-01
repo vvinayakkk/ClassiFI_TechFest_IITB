@@ -103,6 +103,8 @@ Finally, we reached **Stage 5**, where the model was fine-tuned on a set of **96
 Through each iteration, we saw incremental improvements in both classification accuracy and performance metrics. These weren’t just numbers—they were tangible results that reflected the system’s growing ability to understand and categorize resumes.
 
 ---
+![image](https://github.com/user-attachments/assets/35cfed80-93e7-4e3a-9b76-a77aa2aaa8f7)
+![image](https://github.com/user-attachments/assets/f1530566-701f-4516-9033-173704892b58)
 
 ## **Why This Approach is Better** 🏆
 
@@ -112,6 +114,7 @@ The advantage of using **BERT** for fine-tuning over traditional models lies in 
 - **Scalability** 🌱: As we moved from broad categories to more granular classifications, the model demonstrated an ability to scale, making it suitable for diverse industries and job roles.
 
 ---
+![image](https://github.com/user-attachments/assets/29789155-030e-40e1-bcec-717b96efd8f5)
 
 ## **Key Features of the Model Training Process**:
 
@@ -120,6 +123,7 @@ The advantage of using **BERT** for fine-tuning over traditional models lies in 
 - **Model Reusability** 🔁: After each iteration, we saved the state of the model, reloading and adapting it for the next phase, ensuring we retained all learning from previous stages.
 
 ---
+![image](https://github.com/user-attachments/assets/18477531-52b6-490d-9e17-f410b4cdb85d)
 
 ## **Expanding the Model’s Potential** 🚀
 
