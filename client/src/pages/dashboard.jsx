@@ -9,37 +9,123 @@ import ResumeProcessingLoader from '@/components/ResumeProcessingLoader';
 import StatsGrid from '@/components/dashboard/StatsGrid';
 import { NOTIFICATIONS, RECENT_UPLOADS, PROCESSING_RESULTS } from '@/constants/dashboardData';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [processingResults] = useState(PROCESSING_RESULTS);
+  const [processingResults, setProcessingResults] = useState(PROCESSING_RESULTS);
   const [recentUploads, setRecentUploads] = useState(RECENT_UPLOADS);
   const [selectedUpload, setSelectedUpload] = useState(null);
+  const [error, setError] = useState(null);
+
+  const processResumeWithModel = async (file, modelNumber) => {
+    const formData = new FormData();
+    formData.append('resume', file);
+
+    try {
+      const response = await fetch(`${SERVER_URL}/api/upload-resume${modelNumber}/`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`Model ${modelNumber} failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      if (data.status === 'failed') {
+        throw new Error(`Model ${modelNumber} processing failed`);
+      }
+
+      return data;
+    } catch (error) {
+      setError(`Model ${modelNumber}: ${error.message}`);
+      return null;
+    }
+  };
 
   const handleUploadClick = () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.pdf,.doc,.docx';
+    input.accept = '.pdf';
+
     input.onchange = async (e) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
+      // Validate file size (e.g., max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        setError("File size exceeds 10MB limit");
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.includes('pdf')) {
+        setError("Only PDF files are allowed");
+        return;
+      }
+
+      setError(null);
       setIsProcessing(true);
+      const results = {
+        modelResponses: [],
+        finalClassification: '',
+        overallConfidence: 0
+      };
+
       try {
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        // Process with all models
+        for (let i = 1; i <= 4; i++) {
+          const response = await processResumeWithModel(file, i);
+          if (!response) {
+            throw new Error(`Processing failed at model ${i}`);
+          }
+
+          results.modelResponses.push({
+            model: i,
+            category: response.category,
+            confidence: Math.floor(Math.random() * 15) + 85 // Simulated confidence 85-100%
+          });
+        }
+
+        if (results.modelResponses.length === 0) {
+          throw new Error("No model responses received");
+        }
+
+        // Calculate final classification (most common category)
+        const categories = results.modelResponses.map(r => r.category);
+        const mostCommon = categories.sort((a, b) =>
+          categories.filter(v => v === a).length - categories.filter(v => v === b).length
+        ).pop();
+
+        results.finalClassification = mostCommon;
+        results.overallConfidence = Math.floor(
+          results.modelResponses.reduce((acc, curr) => acc + curr.confidence, 0) / 4
+        );
+
+        // Update uploads list
         const newUpload = {
           id: Date.now(),
           name: file.name,
-          status: `Classified as: ${processingResults.finalClassification}`,
+          status: `Classified as: ${results.finalClassification}`,
           time: "Just now",
-          confidence: processingResults.overallConfidence,
-          skills: processingResults.model4.skills
+          confidence: results.overallConfidence,
+          skills: ["JavaScript", "React", "Node.js"] // You might want to get this from the API
         };
         setRecentUploads(prev => [newUpload, ...prev]);
+        setProcessingResults(results);
       } catch (error) {
-        console.error("Processing error", error);
+        setError(error.message);
+        setProcessingResults(null);
       } finally {
-        setIsProcessing(false);
+        setTimeout(() => {
+          setIsProcessing(false);
+          // Clear error after 5 seconds
+          if (error) {
+            setTimeout(() => setError(null), 5000);
+          }
+        }, 1000);
       }
     };
     input.click();
@@ -114,7 +200,7 @@ const Dashboard = () => {
             <StatsGrid />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <RecentUploads 
+                <RecentUploads
                   uploads={recentUploads}
                   selectedUpload={selectedUpload}
                   onUploadSelect={handleUploadSelect}
@@ -131,9 +217,13 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <ResumeProcessingLoader isLoading={isProcessing} modelResults={processingResults} />
+      <ResumeProcessingLoader
+        isLoading={isProcessing}
+        modelResults={processingResults}
+        error={error}
+      />
       <Navbar setActiveTab={setActiveTab} />
-      
+
       <div className="p-6 max-w-7xl mx-auto">
         <QuickActions setActiveTab={setActiveTab} handleUploadClick={handleUploadClick} />
         {renderContent()}
