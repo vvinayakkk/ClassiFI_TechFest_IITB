@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4tpb23u$kbqfxvw0b=c-89@%6-!ut50&9th1tn(l6rbkq3*s#s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 import os
 # Application definition
@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'first_iteration',
     'second_iteration',
-   # 'third_iteration',
-#    'fourth_iteration'
+   'third_iteration',
+  'fourth_iteration',
+  'resume_details'
 ]
 
 MIDDLEWARE = [
@@ -107,8 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # React development server
-    'http://127.0.0.1:3000',   # React development server
+    'http://localhost:5173',  # React development server
+    'http://127.0.0.1:5173',   # React development server
     # Add other origins as needed
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

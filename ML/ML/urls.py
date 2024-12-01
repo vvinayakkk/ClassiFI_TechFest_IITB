@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/', include('second_iteration.urls')),
   path('api/', include('third_iteration.urls')),
  path('api/', include('fourth_iteration.urls')),
+ path('api/', include('resume_details.urls')),
 ]
