@@ -1,9 +1,13 @@
 # 🧠 Machine Learning Evolution: Training the Brain of ClassifyMe.ai
 
 ClassifyMe.ai’s success hinges on a robust, multi-stage machine learning pipeline. This pipeline has allowed the system to not only classify resumes accurately but to also evolve over time, learning from its mistakes and improving with every interaction. Below is the detailed journey of fine-tuning and adapting a pre-trained model to handle the complex task of resume classification.
-
+![WhatsApp Image 2024-12-01 at 21 33 44_2bcf287f](https://github.com/user-attachments/assets/8800d0b3-ec80-4dab-9c18-22d483e66bcd)
+![WhatsApp Image 2024-12-01 at 21 34 20_ce3136e5](https://github.com/user-attachments/assets/a140487d-d1db-4299-917a-fea0d9d975c5)
 ---
+![WhatsApp Image 2024-12-01 at 21 34 51_b2766863](https://github.com/user-attachments/assets/daebfa10-9629-4f93-ba5b-b42d2c621153)
 
+![WhatsApp Image 2024-12-01 at 21 35 44_21e83b68](https://github.com/user-attachments/assets/27734ed3-f6ed-4001-8adb-6ff120452c64)
+![image](https://github.com/user-attachments/assets/12804864-2b33-4112-a04b-e7b5f0d3a53b)
 ## 🔄 The Fine-Tuning Journey: From Simplicity to Precision
 
 When we began this project, our first goal was to find a model that could understand and process the varying structures of resumes. Early on, we realized that fine-tuning an existing pre-trained model was the key to achieving both accuracy and efficiency. The backbone of our solution was **BERT** 🧑‍💻—a transformer-based language model that has proven to excel at contextual understanding in NLP tasks.
@@ -103,6 +107,8 @@ Finally, we reached **Stage 5**, where the model was fine-tuned on a set of **96
 Through each iteration, we saw incremental improvements in both classification accuracy and performance metrics. These weren’t just numbers—they were tangible results that reflected the system’s growing ability to understand and categorize resumes.
 
 ---
+![image](https://github.com/user-attachments/assets/35cfed80-93e7-4e3a-9b76-a77aa2aaa8f7)
+![image](https://github.com/user-attachments/assets/f1530566-701f-4516-9033-173704892b58)
 
 ## **Why This Approach is Better** 🏆
 
@@ -112,6 +118,7 @@ The advantage of using **BERT** for fine-tuning over traditional models lies in 
 - **Scalability** 🌱: As we moved from broad categories to more granular classifications, the model demonstrated an ability to scale, making it suitable for diverse industries and job roles.
 
 ---
+![image](https://github.com/user-attachments/assets/29789155-030e-40e1-bcec-717b96efd8f5)
 
 ## **Key Features of the Model Training Process**:
 
@@ -120,6 +127,7 @@ The advantage of using **BERT** for fine-tuning over traditional models lies in 
 - **Model Reusability** 🔁: After each iteration, we saved the state of the model, reloading and adapting it for the next phase, ensuring we retained all learning from previous stages.
 
 ---
+![image](https://github.com/user-attachments/assets/18477531-52b6-490d-9e17-f410b4cdb85d)
 
 ## **Expanding the Model’s Potential** 🚀
 
@@ -138,7 +146,9 @@ By leveraging **BERT’s advanced capabilities** and our detailed fine-tuning pr
 
 Once the model was ready, it was time to bring it to life through a sleek, user-friendly web platform. We wanted **ClassifyMe.ai** to be more than just functional; we wanted it to be engaging, intuitive, and enjoyable to use.
 
+
 ---
+
 
 ## 👁️‍🗨️ Stunning User Interface (UI): A Platform that Pleases the Eye
 
@@ -160,8 +170,6 @@ ClassifyMe.ai isn't just powerful under the hood—it also offers an intuitive, 
 ---
 
 
-
-![image](https://github.com/user-attachments/assets/12804864-2b33-4112-a04b-e7b5f0d3a53b)
 ## 🔧 Technical Architecture: Building the Backbone
 
 ### **Frontend**:
@@ -172,6 +180,8 @@ ClassifyMe.ai isn't just powerful under the hood—it also offers an intuitive, 
 ### **Backend**:
 - **Django & Django REST Framework** for robust backend management and APIs. 🖥️
 ---
+![WhatsApp Image 2024-12-01 at 21 35 24_b76071f6](https://github.com/user-attachments/assets/edc0f49f-667a-4881-995d-e84bafda6824)
+
 
 ## 🛠️ How ClassifyMe.ai Works: Step-by-Step
 
