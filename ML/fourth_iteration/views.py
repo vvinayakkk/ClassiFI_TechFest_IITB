@@ -10,32 +10,8 @@ from transformers import BertTokenizer, BertForSequenceClassification
 from PyPDF2 import PdfReader
 
 # Define the label mapping (same as in your training script)
-LABEL_MAPPING = {
-    0: 'INFORMATION-TECHNOLOGY',
-    1: 'ENGINEERING',
-    2: 'AUTOMOBILE',
-    3: 'BUSINESS-DEVELOPMENT',
-    4: 'ACCOUNTANT',
-    5: 'FINANCE',
-    6: 'SALES',
-    7: 'BANKING',
-    8: 'CONSULTANT',
-    9: 'ADVOCATE',
-    10: 'CHEF',
-    11: 'FITNESS',
-    12: 'HEALTHCARE',
-    13: 'AVIATION',
-    14: 'PUBLIC-RELATIONS',
-    15: 'DIGITAL-MEDIA',
-    16: 'HR',
-    17: 'TEACHER',
-    18: 'DESIGNER',
-    19: 'CONSTRUCTION',
-    20: 'APPAREL',
-    21: 'AGRICULTURAL',
-    22: 'BPO',
-23:'ARTS'
-}
+LABEL_MAPPING =  {0: 'ACCOUNTANT', 1: 'ADVOCATE', 2: 'AGRICULTURAL', 3: 'APPAREL', 4: 'ARTS', 5: 'AUTOMOBILE', 6: 'AVIATION', 7: 'BANKING', 8: 'BPO', 9: 'BUSINESS-DEVELOPMENT', 10: 'CHEF', 11: 'CONSTRUCTION', 12: 'CONSULTANT', 13: 'DESIGNER', 14: 'DIGITAL-MEDIA', 15: 'ENGINEERING', 16: 'FINANCE', 17: 'FITNESS', 18: 'HEALTHCARE', 19: 'HR', 20: 'INFORMATION-TECHNOLOGY', 21: 'PUBLIC-RELATIONS', 22: 'SALES', 23: 'TEACHER'}
+
 
 
 # Model and tokenizer setup

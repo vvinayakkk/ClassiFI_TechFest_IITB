@@ -10,26 +10,7 @@ from transformers import BertTokenizer, BertForSequenceClassification
 from PyPDF2 import PdfReader
 
 # Define the label mapping (same as in your training script)
-LABEL_MAPPING = {
-    0: 'INFORMATION_TECHNOLOGY',
-    1: 'ENGINEERING',
-    2: 'AUTOMOBILE',
-    3: 'BUSINESS_DEVELOPMENT',
-    4: 'ACCOUNTING',
-    5: 'FINANCE',
-    6: 'SALES',
-    7: 'BANKING',
-    8: 'CONSULTING',
-    9: 'LEGAL',
-    10: 'CREATIVE',
-    11: 'ARTS',
-    12: 'HEALTHCARE',
-    13: 'AVIATION',
-    14: 'MARKETING',
-    15: 'EDUCATION',
-    16: 'CONSTRUCTION',
-  17:'OTHERS'
-}
+LABEL_MAPPING = {0: 'ACCOUNTING', 1: 'ARTS', 2: 'AUTOMOBILE', 3: 'AVIATION', 4: 'BANKING', 5: 'BUSINESS_DEVELOPMENT', 6: 'CONSTRUCTION', 7: 'CONSULTING', 8: 'CREATIVE', 9: 'EDUCATION', 10: 'ENGINEERING', 11: 'FINANCE', 12: 'HEALTHCARE', 13: 'INFORMATION_TECHNOLOGY', 14: 'LEGAL', 15: 'MARKETING', 16: 'OTHERS', 17: 'SALES'}
 
 # Model and tokenizer setup
 MODEL_PATH = "C:/Users/vinay/Desktop/asims_classifi/ClassiFI/model_weights/third_iteration_18"

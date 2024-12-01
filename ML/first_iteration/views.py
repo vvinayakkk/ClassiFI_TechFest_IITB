@@ -8,14 +8,7 @@ from PyPDF2 import PdfReader
 import base64
 
 # Define the label mapping (same as in your training script)
-LABEL_MAPPING = {
-    0: 'TECH',
-    1: 'NON-TECH', 
-    2: 'MEDICAL', 
-    3: 'LEGAL', 
-    4: 'EDUCATION', 
-    5: 'OTHERS'
-}
+LABEL_MAPPING ={0: 'EDUCATION', 1: 'LEGAL', 2: 'MEDICAL', 3: 'NON-TECH', 4: 'OTHERS', 5: 'TECH'}
 
 # Model and tokenizer setup
 MODEL_PATH = "C:/Users/vinay/Desktop/asims_classifi/ClassiFI/model_weights/first_iteration_6"
