@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import { Navbar } from '@/components/dashboard/Navbar';
-import { QuickActions } from '@/components/dashboard/QuickActions';
-import { StatsGrid } from '@/components/dashboard/StatsGrid';
-import { RecentUploads } from '@/components/dashboard/RecentUploads';
-import { NOTIFICATIONS, RECENT_UPLOADS, PROCESSING_RESULTS } from '@/constants/dashboardData';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import ResumeProcessingLoader from '@/components/ResumeProcessingLoader ';
-import { Notifications } from '@/components/dashboard/Notifications';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Classifications from '@/components/dashboard/Classifications';
+import Navbar from '@/components/dashboard/Navbar';
+import Notifications from '@/components/dashboard/Notifications';
+import QuickActions from '@/components/dashboard/QuickActions';
+import RecentUploads from '@/components/dashboard/RecentUploads';
+import ResumeProcessingLoader from '@/components/ResumeProcessingLoader';
+import StatsGrid from '@/components/dashboard/StatsGrid';
+import { NOTIFICATIONS, RECENT_UPLOADS, PROCESSING_RESULTS } from '@/constants/dashboardData';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [processingResults, setProcessingResults] = useState(PROCESSING_RESULTS);
+  const [processingResults] = useState(PROCESSING_RESULTS);
   const [recentUploads, setRecentUploads] = useState(RECENT_UPLOADS);
-  const [showNotifications, setShowNotifications] = useState(false);
   const [selectedUpload, setSelectedUpload] = useState(null);
 
   const handleUploadClick = () => {
@@ -22,26 +21,25 @@ const Dashboard = () => {
     input.type = 'file';
     input.accept = '.pdf,.doc,.docx';
     input.onchange = async (e) => {
-      if (e.target.files?.[0]) {
-        setIsProcessing(true);
-        try {
-          await new Promise(resolve => setTimeout(resolve, 5000));
-          setRecentUploads(prev => [
-            {
-              id: Date.now(),
-              name: e.target.files[0].name,
-              status: `Classified as: ${processingResults.finalClassification}`,
-              time: "Just now",
-              confidence: processingResults.overallConfidence,
-              skills: processingResults.model4.skills
-            },
-            ...prev
-          ]);
-        } catch (error) {
-          console.error("Processing error", error);
-        } finally {
-          setIsProcessing(false);
-        }
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      setIsProcessing(true);
+      try {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        const newUpload = {
+          id: Date.now(),
+          name: file.name,
+          status: `Classified as: ${processingResults.finalClassification}`,
+          time: "Just now",
+          confidence: processingResults.overallConfidence,
+          skills: processingResults.model4.skills
+        };
+        setRecentUploads(prev => [newUpload, ...prev]);
+      } catch (error) {
+        console.error("Processing error", error);
+      } finally {
+        setIsProcessing(false);
       }
     };
     input.click();

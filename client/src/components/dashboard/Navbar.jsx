@@ -1,9 +1,8 @@
-
-import { Bell, Search, Settings, User } from 'lucide-react';
 import { useState } from 'react';
+import { Bell, Search, Settings, User } from 'lucide-react';
 import { NOTIFICATIONS } from '@/constants/dashboardData';
 
-export const Navbar = ({ setActiveTab }) => {
+const Navbar = ({ setActiveTab }) => {
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
@@ -68,3 +67,5 @@ export const Navbar = ({ setActiveTab }) => {
     </nav>
   );
 };
+
+export default Navbar;

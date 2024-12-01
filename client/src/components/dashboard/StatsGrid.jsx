@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { STATS_CARDS } from '@/constants/dashboardData';
 import * as LucideIcons from 'lucide-react';
+import { STATS_CARDS } from '@/constants/dashboardData';
 
-export const StatsGrid = () => {
+const StatsGrid = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       {STATS_CARDS.map((card, index) => {
@@ -36,3 +36,5 @@ export const StatsGrid = () => {
     </div>
   );
 };
+
+export default StatsGrid;

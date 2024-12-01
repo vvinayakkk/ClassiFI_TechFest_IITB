@@ -1,8 +1,7 @@
-
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { FileText, ChevronRight } from 'lucide-react';
 
-export const RecentUploads = ({ uploads, selectedUpload, onUploadSelect }) => {
+const RecentUploads = ({ uploads, selectedUpload, onUploadSelect }) => {
   return (
     <Card>
       <CardHeader>
@@ -47,3 +46,5 @@ export const RecentUploads = ({ uploads, selectedUpload, onUploadSelect }) => {
     </Card>
   );
 };
+
+export default RecentUploads;

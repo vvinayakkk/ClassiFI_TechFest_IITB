@@ -1,8 +1,7 @@
-
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Bell } from 'lucide-react';
 
-export const Notifications = ({ notifications }) => {
+const Notifications = ({ notifications }) => {
   return (
     <Card>
       <CardHeader>
@@ -37,3 +36,5 @@ export const Notifications = ({ notifications }) => {
     </Card>
   );
 };
+
+export default Notifications;

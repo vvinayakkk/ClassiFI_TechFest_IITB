@@ -1,29 +1,18 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Drawer, 
-  DrawerClose, 
-  DrawerContent, 
-  DrawerDescription, 
-  DrawerFooter, 
-  DrawerHeader, 
-  DrawerTitle, 
-  DrawerTrigger 
-} from "@/components/ui/drawer";
-import { Info } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Info } from 'lucide-react';
 import { CLASSIFICATION_DATA, CATEGORY_DETAILS } from '@/constants/dashboardData';
 
 const Classifications = () => {
-  const getCategoryDetails = (category) => {
-    return CATEGORY_DETAILS[category] || {
-      totalPDFs: 0,
-      averageConfidence: 0,
-      topSkills: [],
-      averageExperience: "N/A",
-      description: "No detailed information available.",
-      keyResponsibilities: []
-    };
+  const getCategoryDetails = (category) => CATEGORY_DETAILS[category] || {
+    totalPDFs: 0,
+    averageConfidence: 0,
+    topSkills: [],
+    averageExperience: "N/A",
+    description: "No detailed information available.",
+    keyResponsibilities: []
   };
 
   return (
