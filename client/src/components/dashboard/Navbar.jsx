@@ -1,21 +1,30 @@
 import { useState } from 'react';
-import { Bell, Search, Settings, User } from 'lucide-react';
+import { Bell, Search, Settings, User, Menu, X } from 'lucide-react';
 import { NOTIFICATIONS } from '@/constants/dashboardData';
 
 const Navbar = ({ setActiveTab }) => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
-    <nav className="bg-white shadow-lg px-6 py-4 sticky top-0 z-50">
+    <nav className="bg-white shadow-lg px-4 sm:px-6 py-4 sticky top-0 z-50">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text cursor-pointer"
-            onClick={() => setActiveTab('dashboard')}
-          >
-            ResumeAI
-          </h1>
-          <div className="relative">
+          <div className="flex items-center justify-between w-full sm:w-auto">
+            <h1 
+              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text cursor-pointer"
+              onClick={() => setActiveTab('dashboard')}
+            >
+              ResumeAI
+            </h1>
+            <button 
+              className="sm:hidden p-2 hover:bg-gray-100 rounded-lg"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+            >
+              {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+          <div className="hidden sm:block relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <input
               type="text"
@@ -24,7 +33,9 @@ const Navbar = ({ setActiveTab }) => {
             />
           </div>
         </div>
-        <div className="flex items-center space-x-4">
+
+        {/* Desktop Navigation */}
+        <div className="hidden sm:flex items-center space-x-4">
           <div className="relative">
             <button 
               className="p-2 rounded-full hover:bg-gray-100 relative"
@@ -64,6 +75,32 @@ const Navbar = ({ setActiveTab }) => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="sm:hidden mt-4 space-y-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <input
+              type="text"
+              placeholder="Search resumes..."
+              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+            />
+          </div>
+          <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg">
+            <span>Notifications</span>
+            <Bell className="h-5 w-5 text-gray-600" />
+          </div>
+          <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg" onClick={() => setActiveTab('settings')}>
+            <span>Settings</span>
+            <Settings className="h-5 w-5 text-gray-600" />
+          </div>
+          <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg">
+            <span>Profile</span>
+            <User className="h-5 w-5 text-gray-600" />
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
