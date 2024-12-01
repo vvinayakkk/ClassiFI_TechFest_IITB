@@ -8,6 +8,7 @@ import RecentUploads from '@/components/dashboard/RecentUploads';
 import ResumeProcessingLoader from '@/components/ResumeProcessingLoader';
 import StatsGrid from '@/components/dashboard/StatsGrid';
 import { NOTIFICATIONS, RECENT_UPLOADS, PROCESSING_RESULTS } from '@/constants/dashboardData';
+import Analytics from '@/components/Analytics';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -78,7 +79,7 @@ const Dashboard = () => {
 
       try {
         // Process with all models
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 1; i <= 5; i++) {
           const response = await processResumeWithModel(file, i);
           if (!response) {
             throw new Error(`Processing failed at model ${i}`);
@@ -144,28 +145,9 @@ const Dashboard = () => {
   };
 
   const renderAnalytics = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle>Analytics Dashboard</CardTitle>
-        <CardDescription>Detailed metrics and insights</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="font-medium mb-2">Classification Accuracy</h3>
-              <div className="text-3xl font-bold text-blue-600">98.5%</div>
-              <p className="text-sm text-gray-500">Last 7 days</p>
-            </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="font-medium mb-2">Total Processed</h3>
-              <div className="text-3xl font-bold text-blue-600">1,234</div>
-              <p className="text-sm text-gray-500">This month</p>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <div>
+      <Analytics />
+    </div>
   );
 
   const renderSettings = () => (

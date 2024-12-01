@@ -71,36 +71,60 @@ const Analytics = () => {
     };
 
     return (
-        <>
-        <div className='flex items-center justify-center mt-10'>
-            <div className='relative animate-fadeIn'>
-                {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                    </div>
-                )}
-                <iframe 
-                    title="Wandb Report"
-                    src="https://wandb.ai/vvinayakkk-sardar-patel-institute-of-technology/huggingface/reports/Untitled-Report--VmlldzoxMDQwOTQ5MA?accessToken=jlnvsord7v1pnxz5efh4492zmhahs7u8rfofyvdpstiu7xjdfr5jayy7lsozefej"
-                    onLoad={() => setIsLoading(false)}
-                    className="transition-all duration-300"
-                    style={{
-                        border: '5px solid #121212',
-                        borderRadius: '15px',
-                        height: '900px',
-                        width: '1200px',
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                    }}
-                />
+        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            {/* Header Section */}
+            <div className="max-w-7xl mx-auto text-center mb-12">
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Analytics Dashboard</h1>
+                <p className="text-lg text-gray-600">Comprehensive analysis of professional distribution and model performance</p>
             </div>
-        </div>
 
-        <div className='flex items-center justify-center mt-10'>
-            <div className='w-[90vw] h-[80vh] max-w-[1200px] p-4 bg-white rounded-lg shadow-lg'>
-                <Pie data={data} options={options} />
-            </div>
+            {/* Model Performance Section */}
+            <section className="max-w-7xl mx-auto mb-16">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-6 px-4">Model Performance Metrics</h2>
+                <div className='relative'>
+                    {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/80 backdrop-blur-sm rounded-xl z-10">
+                            <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
+                        </div>
+                    )}
+                    <div className="bg-white p-4 rounded-xl shadow-lg">
+                        <iframe 
+                            title="Wandb Report"
+                            src="https://wandb.ai/vvinayakkk-sardar-patel-institute-of-technology/huggingface/reports/Untitled-Report--VmlldzoxMDQwOTQ5MA?accessToken=jlnvsord7v1pnxz5efh4492zmhahs7u8rfofyvdpstiu7xjdfr5jayy7lsozefej"
+                            onLoad={() => setIsLoading(false)}
+                            className="w-full transition-all duration-300 rounded-lg"
+                            style={{
+                                height: 'calc(90vh - 200px)',
+                                minHeight: '600px',
+                                border: '2px solid #e5e7eb',
+                            }}
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Distribution Chart Section */}
+            <section className="max-w-7xl mx-auto">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-6 px-4">Professional Distribution</h2>
+                <div className='bg-white rounded-xl shadow-lg p-6'>
+                    <div className='h-[600px] md:h-[700px] w-full'>
+                        <Pie 
+                            data={data} 
+                            options={{
+                                ...options,
+                                plugins: {
+                                    ...options.plugins,
+                                    legend: {
+                                        ...options.plugins.legend,
+                                        position: window.innerWidth < 768 ? 'bottom' : 'right',
+                                    }
+                                }
+                            }} 
+                        />
+                    </div>
+                </div>
+            </section>
         </div>
-        </>
     );
 };
 
